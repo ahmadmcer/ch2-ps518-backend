@@ -9,4 +9,4 @@ env_variables:
   MYSQL_USER: root
   MYSQL_PASSWORD: root4995
   MYSQL_DATABASE: feedpicker_db
-  MYSQL_HOST: /cloudsql/ch2-ps518:asia-southeast2:ch2-ps518
+  MYSQL_HOST: 34.101.60.35
