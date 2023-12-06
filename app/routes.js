@@ -5,6 +5,11 @@ const routes = [
   // Customer Users
   {
     method: 'GET',
+    path: '/api/search/customers',
+    handler: handler.searchCustomers,
+  },
+  {
+    method: 'GET',
     path: '/api/customers',
     handler: handler.getAllCustomers,
   },
@@ -30,6 +35,11 @@ const routes = [
   },
 
   // SME Users
+  {
+    method: 'GET',
+    path: '/api/search/smes',
+    handler: handler.searchSMEs,
+  },
   {
     method: 'GET',
     path: '/api/smes',

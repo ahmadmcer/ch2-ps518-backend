@@ -2,6 +2,17 @@
 const db = require('./database');
 
 // CRUD operations for customer_users table
+const searchCustomers = async (request, h) => {
+  try {
+    const { query } = request.query;
+    const [rows] = await db.query('SELECT * FROM customer_users WHERE name LIKE ?', [`%${query}%`]);
+    return rows;
+  } catch (error) {
+    console.error('Error searching customers:', error.message);
+    throw error;
+  }
+};
+
 const getAllCustomers = async (request, h) => {
   try {
     const [rows] = await db.query('SELECT * FROM customer_users');
@@ -69,6 +80,17 @@ const deleteCustomer = async (request, h) => {
 };
 
 // CRUD operations for sme_users table
+const searchSMEs = async (request, h) => {
+  try {
+    const { query } = request.query;
+    const [rows] = await db.query('SELECT * FROM sme_users WHERE name LIKE ?', [`%${query}%`]);
+    return rows;
+  } catch (error) {
+    console.error('Error searching SMEs:', error.message);
+    throw error;
+  }
+};
+
 const getAllSMEs = async (request, h) => {
   try {
     const [rows] = await db.query('SELECT * FROM sme_users');
@@ -335,11 +357,13 @@ const deleteVoucher = async (request, h) => {
 };
 
 module.exports = {
+  searchCustomers,
   getAllCustomers,
   getCustomerById,
   createCustomer,
   updateCustomer,
   deleteCustomer,
+  searchSMEs,
   getAllSMEs,
   getSMEById,
   createSME,
