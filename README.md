@@ -6,6 +6,15 @@
 
 ## **Customer Users**
 
+### **Search Customers**
+- **Endpoint:** `/api/search/customers`
+- **Method:** `GET`
+- **Description:** Search for customer users based on a query string.
+- **Query Parameters:**
+  - `query` (string, required): The search query.
+- **Response:**
+  - `200 OK`: Returns an array of customer users that match the search query.
+
 ### Get All Customers
 - **Endpoint:** `/api/customers`
 - **Method:** `GET`
@@ -65,6 +74,15 @@
   - `404 Not Found`: If the customer user with the given ID is not found.
 
 ## **SME Users**
+
+### **Search SMEs**
+- **Endpoint:** `/api/search/smes`
+- **Method:** `GET`
+- **Description:** Search for SME users based on a query string.
+- **Query Parameters:**
+  - `query` (string, required): The search query.
+- **Response:**
+  - `200 OK`: Returns an array of SME users that match the search query.
 
 ### Get All SMEs
 - **Endpoint:** `/api/smes`
@@ -324,8 +342,79 @@
 - Handle errors by checking the HTTP status codes and the corresponding error messages in the response.
 - For security reasons, always use HTTPS when interacting with the API.
 
+## **Important Notes for Search usage:**
+- The search query is provided as a query parameter (`query`) in the URL.
+- The API will return results that match the provided search query.
+- Adjust the `query` parameter with the desired search term.
+- The response will contain an array of customer or SME objects that match the search criteria.
+- Handle errors by checking the HTTP status codes and the corresponding error messages in the response.
+
 ## **Example Usage:**
-### 1. Get All Customers
+### **1. Search Customers**
+- **Request:**
+  ```http
+  GET /api/search/customers?query=john
+  ```
+- **Response (200 OK):**
+  ```json
+  [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "username": "johndoe",
+      "email": "john.doe@example.com",
+      "phone": "+123456789",
+      "profile_picture": "https://example.com/johndoe.jpg",
+      "created_at": "2023-01-01T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Johnny Smith",
+      "username": "johnnysmith",
+      "email": "johnny.smith@example.com",
+      "phone": "+987654321",
+      "profile_picture": "https://example.com/johnnysmith.jpg",
+      "created_at": "2023-01-02T10:30:00Z"
+    }
+    // Additional customer objects...
+  ]
+  ```
+
+### **2. Search SMEs**
+- **Request:**
+  ```http
+  GET /api/search/smes?query=shop
+  ```
+- **Response (200 OK):**
+  ```json
+  [
+    {
+      "id": 1,
+      "username": "smeshop",
+      "name": "SME Shop",
+      "email": "info@smeshop.com",
+      "phone": "+987654321",
+      "profile_picture": "https://example.com/smeshop.jpg",
+      "banner_picture": "https://example.com/smeshop-banner.jpg",
+      "description": "Your one-stop SME shop.",
+      "created_at": "2023-01-05T15:45:00Z"
+    },
+    {
+      "id": 2,
+      "username": "shopify",
+      "name": "Shopify Store",
+      "email": "info@shopify.com",
+      "phone": "+123456789",
+      "profile_picture": "https://example.com/shopify.jpg",
+      "banner_picture": "https://example.com/shopify-banner.jpg",
+      "description": "Premium eCommerce solutions.",
+      "created_at": "2023-01-10T08:15:00Z"
+    }
+    // Additional SME objects...
+  ]
+  ```
+
+### 3. Get All Customers
 - **Request:**
   ```http
   GET /api/customers
@@ -346,7 +435,7 @@
   ]
   ```
 
-### 2. Create SME
+### 4. Create SME
 - **Request:**
   ```http
   POST /api/smes
@@ -371,7 +460,7 @@
   }
   ```
 
-### 3. Get SME Social Media
+### 5. Get SME Social Media
 - **Request:**
   ```http
   GET /api/smes/1/socialmedia
