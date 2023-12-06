@@ -1,167 +1,393 @@
-Berikut adalah dokumentasi penggunaan API untuk beberapa endpoint yang telah diimplementasikan:
+# **API Documentation**
 
-### 1. **Customer Users**
+## **Base URL**
 
-#### 1.1 Mendapatkan Semua Customer Users
+- **Base URL:** `https://ch2-ps518.et.r.appspot.com`
 
+## **Customer Users**
+
+### Get All Customers
 - **Endpoint:** `/api/customers`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan daftar semua customer users.
+- **Method:** `GET`
+- **Description:** Retrieve a list of all customer users.
+- **Response:**
+  - `200 OK`: Returns an array of customer users.
 
-#### 1.2 Mendapatkan Customer User Berdasarkan ID
-
+### Get Customer by ID
 - **Endpoint:** `/api/customers/{id}`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan informasi customer user berdasarkan ID.
+- **Method:** `GET`
+- **Description:** Retrieve a specific customer user by ID.
+- **Parameters:**
+  - `id` (path): ID of the customer user.
+- **Response:**
+  - `200 OK`: Returns the details of the specified customer user.
+  - `404 Not Found`: If the customer user with the given ID is not found.
 
-#### 1.3 Membuat Customer User Baru
-
+### Create Customer
 - **Endpoint:** `/api/customers`
-- **Metode:** `POST`
-- **Deskripsi:** Membuat customer user baru.
+- **Method:** `POST`
+- **Description:** Create a new customer user.
+- **Request Body:**
+  - `name`: Customer's name.
+  - `username`: Customer's username.
+  - `password`: Customer's password.
+  - `email`: Customer's email.
+  - `phone`: Customer's phone number.
+  - `profile_picture`: URL of the customer's profile picture.
+- **Response:**
+  - `201 Created`: Returns the ID and a success message of the newly created customer.
 
-#### 1.4 Memperbarui Informasi Customer User
-
+### Update Customer
 - **Endpoint:** `/api/customers/{id}`
-- **Metode:** `PUT`
-- **Deskripsi:** Memperbarui informasi customer user berdasarkan ID.
+- **Method:** `PUT`
+- **Description:** Update an existing customer user by ID.
+- **Parameters:**
+  - `id` (path): ID of the customer user to be updated.
+- **Request Body:**
+  - `name`: Customer's name.
+  - `username`: Customer's username.
+  - `password`: Customer's password.
+  - `email`: Customer's email.
+  - `phone`: Customer's phone number.
+  - `profile_picture`: URL of the customer's profile picture.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the customer was updated.
+  - `404 Not Found`: If the customer user with the given ID is not found.
 
-#### 1.5 Menghapus Customer User
-
+### Delete Customer
 - **Endpoint:** `/api/customers/{id}`
-- **Metode:** `DELETE`
-- **Deskripsi:** Menghapus customer user berdasarkan ID.
+- **Method:** `DELETE`
+- **Description:** Delete a customer user by ID.
+- **Parameters:**
+  - `id` (path): ID of the customer user to be deleted.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the customer was deleted.
+  - `404 Not Found`: If the customer user with the given ID is not found.
 
-### 2. **SME Users**
+## **SME Users**
 
-#### 2.1 Mendapatkan Semua SME Users
-
+### Get All SMEs
 - **Endpoint:** `/api/smes`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan daftar semua SME users.
+- **Method:** `GET`
+- **Description:** Retrieve a list of all SME users.
+- **Response:**
+  - `200 OK`: Returns an array of SME users.
 
-#### 2.2 Mendapatkan SME User Berdasarkan ID
-
+### Get SME by ID
 - **Endpoint:** `/api/smes/{id}`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan informasi SME user berdasarkan ID.
+- **Method:** `GET`
+- **Description:** Retrieve a specific SME user by ID.
+- **Parameters:**
+  - `id` (path): ID of the SME user.
+- **Response:**
+  - `200 OK`: Returns the details of the specified SME user.
+  - `404 Not Found`: If the SME user with the given ID is not found.
 
-#### 2.3 Membuat SME User Baru
-
+### Create SME
 - **Endpoint:** `/api/smes`
-- **Metode:** `POST`
-- **Deskripsi:** Membuat SME user baru.
+- **Method:** `POST`
+- **Description:** Create a new SME user.
+- **Request Body:**
+  - `username`: SME's username.
+  - `password`: SME's password.
+  - `name`: SME's name.
+  - `email`: SME's email.
+  - `phone`: SME's phone number.
+  - `profile_picture`: URL of the SME's profile picture.
+  - `banner_picture`: URL of the SME's banner picture.
+  - `description`: SME's description.
+- **Response:**
+  - `201 Created`: Returns the ID and a success message of the newly created SME.
 
-#### 2.4 Memperbarui Informasi SME User
-
+### Update SME
 - **Endpoint:** `/api/smes/{id}`
-- **Metode:** `PUT`
-- **Deskripsi:** Memperbarui informasi SME user berdasarkan ID.
+- **Method:** `PUT`
+- **Description:** Update an existing SME user by ID.
+- **Parameters:**
+  - `id` (path): ID of the SME user to be updated.
+- **Request Body:**
+  - `username`: SME's username.
+  - `password`: SME's password.
+  - `name`: SME's name.
+  - `email`: SME's email.
+  - `phone`: SME's phone number.
+  - `profile_picture`: URL of the SME's profile picture.
+  - `banner_picture`: URL of the SME's banner picture.
+  - `description`: SME's description.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the SME was updated.
+  - `404 Not Found`: If the SME user with the given ID is not found.
 
-#### 2.5 Menghapus SME User
-
+### Delete SME
 - **Endpoint:** `/api/smes/{id}`
-- **Metode:** `DELETE`
-- **Deskripsi:** Menghapus SME user berdasarkan ID.
+- **Method:** `DELETE`
+- **Description:** Delete an SME user by ID.
+- **Parameters:**
+  - `id` (path): ID of the SME user to be deleted.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the SME was deleted.
+  - `404 Not Found`: If the SME user with the given ID is not found.
 
-### 3. **SME Social Media**
+## **SME Social Media**
 
-#### 3.1 Mendapatkan Informasi Social Media SME Berdasarkan SME ID
-
+### Get SME Social Media by SME ID
 - **Endpoint:** `/api/smes/{sme_id}/socialmedia`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan informasi social media SME berdasarkan SME ID.
+- **Method:** `GET`
+- **Description:** Retrieve the social media details of a specific SME by SME ID.
+- **Parameters:**
+  - `sme_id` (path): ID of the SME user.
+- **Response:**
+  - `200 OK`: Returns the social media details of the specified SME.
+  - `404 Not Found`: If the SME user with the given ID is not found.
 
-#### 3.2 Membuat Informasi Social Media Baru untuk SME
-
+### Create SME Social Media
 - **Endpoint:** `/api/smes/{sme_id}/socialmedia`
-- **Metode:** `POST`
-- **Deskripsi:** Membuat informasi social media baru untuk SME.
+- **Method:** `POST`
+- **Description:** Create social media details for a specific SME.
+- **Parameters:**
+  - `sme_id` (path): ID of the SME user.
+- **Request Body:**
+  - `facebook`: SME's Facebook URL.
+  - `instagram`: SME's Instagram URL.
+  - `x`: SME's X URL.
+  - `tiktok`: SME's TikTok URL.
+  - `whatsapp`: SME's WhatsApp number.
+  - `telegram`: SME's Telegram username.
+  - `youtube`: SME's YouTube URL.
+  - `linkedin`: SME's LinkedIn URL.
+  - `website`: SME's website URL.
+- **Response:**
+  - `201 Created`: Returns a success message indicating the social media details were created.
+  - `404 Not Found`: If the SME user with the given ID is not found.
 
-#### 3.3 Memperbarui Informasi Social Media untuk SME
-
+### Update SME Social Media
 - **Endpoint:** `/api/smes/{sme_id}/socialmedia`
-- **Metode:** `PUT`
-- **Deskripsi:** Memperbarui informasi social media untuk SME berdasarkan SME ID.
+- **Method:** `PUT`
+- **Description:** Update social media details for a specific SME by SME ID.
+- **Parameters:**
+  - `sme_id` (path): ID of the SME user.
+- **Request Body:**
+  - `facebook`: SME's Facebook URL.
+  - `instagram`: SME's Instagram URL.
+  - `x`: SME's X URL.
+  - `tiktok`: SME's TikTok URL.
+  - `whatsapp`: SME's WhatsApp number.
+  - `telegram`: SME's Telegram username.
+  - `youtube`: SME's YouTube URL.
+  - `linkedin`: SME's LinkedIn URL.
+  - `website`: SME's website URL.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the social media details were updated.
+  - `404 Not Found`: If the SME user with the given ID is not found.
 
-### 4. **Feedbacks**
+## **Feedbacks**
 
-#### 4.1 Mendapatkan Semua Feedbacks
-
+### Get All Feedbacks
 - **Endpoint:** `/api/feedbacks`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan daftar semua feedbacks.
+- **Method:** `GET`
+- **Description:** Retrieve a list of all feedbacks.
+- **Response:**
+  - `200 OK`: Returns an array of feedbacks.
 
-#### 4.2 Mendapatkan Feedback Berdasarkan ID
-
+### Get Feedback by ID
 - **Endpoint:** `/api/feedbacks/{id}`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan informasi feedback berdasarkan ID.
+- **Method:** `GET`
+- **Description:** Retrieve a specific feedback by ID.
+- **Parameters:**
+  - `id` (path): ID of the feedback.
+- **Response:**
+  - `200 OK`: Returns the details of the specified feedback.
+  - `404 Not Found`: If the feedback with the given ID is not found.
 
-#### 4.3 Membuat Feedback Baru
-
+### Create Feedback
 - **Endpoint:** `/api/feedbacks`
-- **Metode:** `POST`
-- **Deskripsi:** Membuat feedback baru.
+- **Method:** `POST`
+- **Description:** Create a new feedback.
+- **Request Body:**
+  - `customer_id`: ID of the customer providing the feedback.
+  - `sme_id`: ID of the SME receiving the feedback.
+  - `rating`: Rating given in the feedback.
+  - `comment`: Text comment provided in the feedback.
+  - `category_id`: ID of the feedback category.
+- **Response:**
+  - `201 Created`: Returns the ID and a success message of the newly created feedback.
 
-#### 4.4 Memperbarui Feedback
-
+### Update Feedback
 - **Endpoint:** `/api/feedbacks/{id}`
-- **Metode:** `PUT`
-- **Deskripsi:** Memperbarui feedback berdasarkan ID.
+- **Method:** `PUT`
+- **Description:** Update an existing feedback by ID.
+- **Parameters:**
+  - `id` (path): ID of the feedback to be updated.
+- **Request Body:**
+  - `customer_id`: ID of the customer providing the feedback.
+  - `sme_id`: ID of the SME receiving the feedback.
+  - `rating`: Rating given in the feedback.
+  - `comment`: Text comment provided in the feedback.
+  - `category_id`: ID of the feedback category.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the feedback was updated.
+  - `404 Not Found`: If the feedback with the given ID is not found.
 
-#### 4.5 Menghapus Feedback
-
+### Delete Feedback
 - **Endpoint:** `/api/feedbacks/{id}`
-- **Metode:** `DELETE`
-- **Deskripsi:** Menghapus feedback berdasarkan ID.
+- **Method:** `DELETE`
+- **Description:** Delete a feedback by ID.
+- **Parameters:**
+  - `id` (path): ID of the feedback to be deleted.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the feedback was deleted.
+  - `404 Not Found`: If the feedback with the given ID is not found.
 
-### 5. **Categories**
+## **Categories**
 
-#### 5.1 Mendapatkan Semua Categories
-
+### Get All Categories
 - **Endpoint:** `/api/categories`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan daftar semua categories.
+- **Method:** `GET`
+- **Description:** Retrieve a list of all categories.
+- **Response:**
+  - `200 OK`: Returns an array of categories.
 
-#### 5.2 Mendapatkan Category Berdasarkan ID
-
+### Get Category by ID
 - **Endpoint:** `/api/categories/{id}`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan informasi category berdasarkan ID.
+- **Method:** `GET`
+- **Description:** Retrieve a specific category by ID.
+- **Parameters:**
+  - `id` (path): ID of the category.
+- **Response:**
+  - `200 OK`: Returns the details of the specified category.
+  - `404 Not Found`: If the category with the given ID is not found.
 
-### 6. **Vouchers**
+## **Vouchers**
 
-#### 6.1 Mendapatkan Semua Vouchers
-
+### Get All Vouchers
 - **Endpoint:** `/api/vouchers`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan daftar semua vouchers.
+- **Method:** `GET`
+- **Description:** Retrieve a list of all vouchers.
+- **Response:**
+  - `200 OK`: Returns an array of vouchers.
 
-#### 6.2 Mendapatkan Voucher Berdasarkan ID
-
+### Get Voucher by ID
 - **Endpoint:** `/api/vouchers/{id}`
-- **Metode:** `GET`
-- **Deskripsi:** Mendapatkan inform
+- **Method:** `GET`
+- **Description:** Retrieve a specific voucher by ID.
+- **Parameters:**
+  - `id` (path): ID of the voucher.
+- **Response:**
+  - `200 OK`: Returns the details of the specified voucher.
+  - `404 Not Found`: If the voucher with the given ID is not found.
 
-asi voucher berdasarkan ID.
-
-#### 6.3 Membuat Voucher Baru
-
+### Create Voucher
 - **Endpoint:** `/api/vouchers`
-- **Metode:** `POST`
-- **Deskripsi:** Membuat voucher baru.
+- **Method:** `POST`
+- **Description:** Create a new voucher.
+- **Request Body:**
+  - `sme_id`: ID of the SME offering the voucher.
+  - `customer_id`: ID of the customer claiming the voucher.
+  - `name`: Name of the voucher.
+  - `image`: URL of the voucher image.
+  - `description`: Text description of the voucher.
+- **Response:**
+  - `201 Created`: Returns the ID and a success message of the newly created voucher.
 
-#### 6.4 Memperbarui Voucher
-
+### Update Voucher
 - **Endpoint:** `/api/vouchers/{id}`
-- **Metode:** `PUT`
-- **Deskripsi:** Memperbarui voucher berdasarkan ID.
+- **Method:** `PUT`
+- **Description:** Update an existing voucher by ID.
+- **Parameters:**
+  - `id` (path): ID of the voucher to be updated.
+- **Request Body:**
+  - `sme_id`: ID of the SME offering the voucher.
+  - `customer_id`: ID of the customer claiming the voucher.
+  - `name`: Name of the voucher.
+  - `image`: URL of the voucher image.
+  - `description`: Text description of the voucher.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the voucher was updated.
+  - `404 Not Found`: If the voucher with the given ID is not found.
 
-#### 6.5 Menghapus Voucher
-
+### Delete Voucher
 - **Endpoint:** `/api/vouchers/{id}`
-- **Metode:** `DELETE`
-- **Deskripsi:** Menghapus voucher berdasarkan ID.
+- **Method:** `DELETE`
+- **Description:** Delete a voucher by ID.
+- **Parameters:**
+  - `id` (path): ID of the voucher to be deleted.
+- **Response:**
+  - `200 OK`: Returns a success message indicating the voucher was deleted.
+  - `404 Not Found`: If the voucher with the given ID is not found.
 
-**Catatan:** Pastikan untuk mengganti `{id}` dan `{sme_id}` dengan parameter yang sesuai dengan implementasi Anda. Selain itu, pastikan untuk menyertakan informasi request payload yang diperlukan untuk operasi pembuatan dan pembaruan data.
+## **Important Notes:**
+- All endpoints are prefixed with `/api`.
+- Ensure to include the appropriate headers, such as `Content-Type: application/json`, in your requests.
+- The API follows RESTful conventions, and the HTTP methods (GET, POST, PUT, DELETE) correspond to specific actions.
+- Provide necessary parameters in the request URL for operations that require them.
+- All date and time values are in UTC format unless specified otherwise.
+- Handle errors by checking the HTTP status codes and the corresponding error messages in the response.
+- For security reasons, always use HTTPS when interacting with the API.
+
+## **Example Usage:**
+### 1. Get All Customers
+- **Request:**
+  ```http
+  GET /api/customers
+  ```
+- **Response (200 OK):**
+  ```json
+  [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "username": "johndoe",
+      "email": "john@example.com",
+      "phone": "+123456789",
+      "profile_picture": "https://example.com/johndoe.jpg",
+      "created_at": "2023-01-01T12:00:00Z"
+    },
+    // Additional customer objects...
+  ]
+  ```
+
+### 2. Create SME
+- **Request:**
+  ```http
+  POST /api/smes
+  Content-Type: application/json
+
+  {
+    "username": "smeshop",
+    "password": "secretpassword",
+    "name": "SME Shop",
+    "email": "info@smeshop.com",
+    "phone": "+987654321",
+    "profile_picture": "https://example.com/smeshop.jpg",
+    "banner_picture": "https://example.com/smeshop-banner.jpg",
+    "description": "Your one-stop SME shop."
+  }
+  ```
+- **Response (201 Created):**
+  ```json
+  {
+    "id": 1,
+    "message": "SME created successfully!"
+  }
+  ```
+
+### 3. Get SME Social Media
+- **Request:**
+  ```http
+  GET /api/smes/1/socialmedia
+  ```
+- **Response (200 OK):**
+  ```json
+  {
+    "sme_id": 1,
+    "facebook": "https://facebook.com/smeshop",
+    "instagram": "https://instagram.com/smeshop",
+    "x": "https://x.com/smeshop",
+    "tiktok": "https://tiktok.com/@smeshop",
+    "whatsapp": "+987654321",
+    "telegram": "@smeshop",
+    "youtube": "https://youtube.com/smeshop",
+    "linkedin": "https://linkedin.com/company/smeshop",
+    "website": "https://smeshop.com"
+  }
+  ```
