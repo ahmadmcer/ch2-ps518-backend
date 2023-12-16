@@ -19,11 +19,6 @@ const routes = [
     handler: handler.getCustomerById,
   },
   {
-    method: 'GET',
-    path: '/api/customers/{customer_id}/feedbacks',
-    handler: handler.getFeedbacksByCustomerId,
-  },
-  {
     method: 'POST',
     path: '/api/customers',
     handler: handler.createCustomer,
@@ -56,11 +51,6 @@ const routes = [
     handler: handler.getSMEById,
   },
   {
-    method: 'GET',
-    path: '/api/smes/{sme_id}/feedbacks',
-    handler: handler.getFeedbacksBySMEId,
-  },
-  {
     method: 'POST',
     path: '/api/smes',
     handler: handler.createSME,
@@ -82,11 +72,11 @@ const routes = [
     path: '/api/smes/{sme_id}/socialmedia',
     handler: handler.getSMEsocialmediaById,
   },
-  {
-    method: 'POST',
-    path: '/api/smes/{sme_id}/socialmedia',
-    handler: handler.createSMEsocialmedia,
-  },
+  // {
+  //   method: 'POST',
+  //   path: '/api/smes/{sme_id}/socialmedia',
+  //   handler: handler.createSMEsocialmedia,
+  // },
   {
     method: 'PUT',
     path: '/api/smes/{sme_id}/socialmedia',
@@ -103,6 +93,16 @@ const routes = [
     method: 'GET',
     path: '/api/feedbacks/{id}',
     handler: handler.getFeedbackById,
+  },
+  {
+    method: 'GET',
+    path: '/api/feedbacks/customers/{customer_id}',
+    handler: handler.getFeedbacksByCustomerId,
+  },
+  {
+    method: 'GET',
+    path: '/api/feedbacks/smes/{sme_id}',
+    handler: handler.getFeedbacksBySMEId,
   },
   {
     method: 'POST',
