@@ -134,6 +134,9 @@ const createSME = async (request, h) => {
     username, password, name, email, phone, profile_picture, banner_picture, description,
   } = request.payload;
 
+  // eslint-disable-next-line no-shadow
+  const { db } = request.server.app; // Mengambil instance db dari server.app
+
   try {
     // Start a transaction
     await db.beginTransaction();
