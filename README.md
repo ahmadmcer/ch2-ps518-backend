@@ -9,6 +9,7 @@
 - [Feedbacks](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#feedbacks)
 - [Categories](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#categories)
 - [Vouchers](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#vouchers)
+- [Login and Logout](https://github.com/Feed-Picker/ch2-ps518-backend/tree/main?tab=readme-ov-file#login-and-logout)
 - [Important Notes](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#important-notes)
 - [Important Notes for Search usage](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#important-notes-for-search-usage)
 - [Example Usage](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#example-usage)
@@ -346,7 +347,9 @@
   - `200 OK`: Returns a success message indicating the voucher was deleted.
   - `404 Not Found`: If the voucher with the given ID is not found.
 
-### **Login**
+## **Login and Logout**
+
+### Login
 
 - **Endpoint:** `/api/login`
 - **Method:** `POST`
@@ -361,7 +364,7 @@
   - `401 Unauthorized`: If the provided credentials are invalid.
   - `400 Bad Request`: If the user type is invalid.
 
-### **Logout (if needed)**
+### Logout (if needed)
 
 - **Endpoint:** `/api/logout`
 - **Method:** `POST`
