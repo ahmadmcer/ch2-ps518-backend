@@ -19,6 +19,11 @@ const routes = [
     handler: handler.getCustomerById,
   },
   {
+    method: 'GET',
+    path: '/api/customers/{customer_id}/feedbacks',
+    handler: handler.getFeedbacksByCustomerId,
+  },
+  {
     method: 'POST',
     path: '/api/customers',
     handler: handler.createCustomer,
@@ -49,6 +54,11 @@ const routes = [
     method: 'GET',
     path: '/api/smes/{id}',
     handler: handler.getSMEById,
+  },
+  {
+    method: 'GET',
+    path: '/api/smes/{sme_id}/feedbacks',
+    handler: handler.getFeedbacksBySMEId,
   },
   {
     method: 'POST',
@@ -147,6 +157,20 @@ const routes = [
     method: 'DELETE',
     path: '/api/vouchers/{id}',
     handler: handler.deleteVoucher,
+  },
+
+  // Login
+  {
+    method: 'POST',
+    path: '/api/login',
+    handler: handler.login,
+  },
+
+  // Logout (if needed)
+  {
+    method: 'POST',
+    path: '/api/logout',
+    handler: handler.logout,
   },
 ];
 
