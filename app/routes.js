@@ -72,11 +72,11 @@ const routes = [
     path: '/api/smes/{sme_id}/socialmedia',
     handler: handler.getSMEsocialmediaById,
   },
-  {
-    method: 'POST',
-    path: '/api/smes/{sme_id}/socialmedia',
-    handler: handler.createSMEsocialmedia,
-  },
+  // {
+  //   method: 'POST',
+  //   path: '/api/smes/{sme_id}/socialmedia',
+  //   handler: handler.createSMEsocialmedia,
+  // },
   {
     method: 'PUT',
     path: '/api/smes/{sme_id}/socialmedia',
@@ -93,6 +93,16 @@ const routes = [
     method: 'GET',
     path: '/api/feedbacks/{id}',
     handler: handler.getFeedbackById,
+  },
+  {
+    method: 'GET',
+    path: '/api/feedbacks/customers/{customer_id}',
+    handler: handler.getFeedbacksByCustomerId,
+  },
+  {
+    method: 'GET',
+    path: '/api/feedbacks/smes/{sme_id}',
+    handler: handler.getFeedbacksBySMEId,
   },
   {
     method: 'POST',
@@ -147,6 +157,20 @@ const routes = [
     method: 'DELETE',
     path: '/api/vouchers/{id}',
     handler: handler.deleteVoucher,
+  },
+
+  // Login
+  {
+    method: 'POST',
+    path: '/api/login',
+    handler: handler.login,
+  },
+
+  // Logout (if needed)
+  {
+    method: 'POST',
+    path: '/api/logout',
+    handler: handler.logout,
   },
 ];
 

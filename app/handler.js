@@ -112,19 +112,61 @@ const getSMEById = async (request, h) => {
   }
 };
 
+// const createSME = async (request, h) => {
+//   try {
+//     const {
+//       username, password, name, email, phone, profile_picture, banner_picture, description,
+//     } = request.payload;
+//     const created_at = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+//     const [result] = await db.query(
+//       'INSERT INTO sme_users (username, password, name, email, phone, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+//       [username, password, name, email, phone, profile_picture, banner_picture, description, created_at],
+//     );
+//     return { id: result.insertId, message: 'SME created successfully!' };
+//   } catch (error) {
+//     console.error('Error creating SME:', error.message);
+//     throw error;
+//   }
+// };
+
 const createSME = async (request, h) => {
+  const {
+    username, password, name, email, phone, profile_picture, banner_picture, description,
+  } = request.payload;
+
+  // eslint-disable-next-line no-shadow
+  const { db } = request.server.app; // Mengambil instance db dari server.app
+
   try {
-    const {
-      username, password, name, email, phone, profile_picture, banner_picture, description,
-    } = request.payload;
-    const created_at = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-    const [result] = await db.query(
-      'INSERT INTO sme_users (username, password, name, email, phone, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [username, password, name, email, phone, profile_picture, banner_picture, description, created_at],
+    // Start a transaction
+    await db.beginTransaction();
+
+    // Create SME
+    const [smeResult] = await db.query(
+      'INSERT INTO sme_users (username, password, name, email, phone, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())',
+      [username, password, name, email, phone, profile_picture, banner_picture, description],
     );
-    return { id: result.insertId, message: 'SME created successfully!' };
+
+    const smeId = smeResult.insertId;
+
+    // Create SME Social Media with the same ID
+    await db.query(
+      'INSERT INTO sme_socialmedia (sme_id, facebook, instagram, x, tiktok, whatsapp, telegram, youtube, linkedin, website) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [smeId, '', '', '', '', '', '', '', '', ''],
+    );
+
+    // Commit the transaction
+    await db.commit();
+
+    return {
+      id: smeId,
+      message: 'SME and SME Social Media created successfully!',
+    };
   } catch (error) {
-    console.error('Error creating SME:', error.message);
+    // Rollback the transaction in case of an error
+    await db.rollback();
+
+    console.error('Error creating SME with Social Media:', error.message);
     throw error;
   }
 };
@@ -169,21 +211,21 @@ const getSMEsocialmediaById = async (request, h) => {
   }
 };
 
-const createSMEsocialmedia = async (request, h) => {
-  try {
-    const {
-      sme_id, facebook, instagram, x, tiktok, whatsapp, telegram, youtube, linkedin, website,
-    } = request.payload;
-    const [result] = await db.query(
-      'INSERT INTO sme_socialmedia (sme_id, facebook, instagram, x, tiktok, whatsapp, telegram, youtube, linkedin, website) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [sme_id, facebook, instagram, x, tiktok, whatsapp, telegram, youtube, linkedin, website],
-    );
-    return { message: 'SME social media created successfully!' };
-  } catch (error) {
-    console.error('Error creating SME social media:', error.message);
-    throw error;
-  }
-};
+// const createSMEsocialmedia = async (request, h) => {
+//   try {
+//     const {
+//       sme_id, facebook, instagram, x, tiktok, whatsapp, telegram, youtube, linkedin, website,
+//     } = request.payload;
+//     const [result] = await db.query(
+//       'INSERT INTO sme_socialmedia (sme_id, facebook, instagram, x, tiktok, whatsapp, telegram, youtube, linkedin, website) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+//       [sme_id, facebook, instagram, x, tiktok, whatsapp, telegram, youtube, linkedin, website],
+//     );
+//     return { message: 'SME social media created successfully!' };
+//   } catch (error) {
+//     console.error('Error creating SME social media:', error.message);
+//     throw error;
+//   }
+// };
 
 const updateSMEsocialmedia = async (request, h) => {
   try {
@@ -220,6 +262,38 @@ const getFeedbackById = async (request, h) => {
     return rows[0];
   } catch (error) {
     console.error('Error fetching feedback by ID:', error.message);
+    throw error;
+  }
+};
+
+const getFeedbacksByCustomerId = async (request, h) => {
+  const { customer_id } = request.params;
+
+  try {
+    const [feedbacks] = await db.query(
+      'SELECT * FROM feedbacks WHERE customer_id = ?',
+      [customer_id],
+    );
+
+    return feedbacks;
+  } catch (error) {
+    console.error('Error getting feedbacks by Customer ID:', error.message);
+    throw error;
+  }
+};
+
+const getFeedbacksBySMEId = async (request, h) => {
+  const { sme_id } = request.params;
+
+  try {
+    const [feedbacks] = await db.query(
+      'SELECT * FROM feedbacks WHERE sme_id = ?',
+      [sme_id],
+    );
+
+    return feedbacks;
+  } catch (error) {
+    console.error('Error getting feedbacks by SME ID:', error.message);
     throw error;
   }
 };
@@ -356,6 +430,59 @@ const deleteVoucher = async (request, h) => {
   }
 };
 
+// Login for Customer or SME
+const login = async (request, h) => {
+  const {
+    email, username, password, userType,
+  } = request.payload;
+
+  try {
+    let tableName; let idFieldName; let nameFieldName;
+
+    // Determine the table and field names based on the user type
+    if (userType === 'customer') {
+      tableName = 'customer_users';
+      idFieldName = 'customer_id';
+      nameFieldName = 'name';
+    } else if (userType === 'sme') {
+      tableName = 'sme_users';
+      idFieldName = 'sme_id';
+      nameFieldName = 'name';
+    } else {
+      return h.response({ message: 'Invalid user type' }).code(400);
+    }
+
+    // Check if the email/username and password match
+    const [user] = await db.query(
+      `SELECT * FROM ${tableName} WHERE (email = ? OR username = ?) AND password = ?`,
+      [email, username, password],
+    );
+
+    if (!user || user.length === 0) {
+      return h.response({ message: 'Invalid credentials' }).code(401);
+    }
+
+    // Return login result
+    const loginResult = {
+      userId: user[0][idFieldName],
+      nama: user[0][nameFieldName],
+    };
+
+    return loginResult;
+  } catch (error) {
+    console.error('Error during login:', error.message);
+    throw error;
+  }
+};
+
+// Logout (if needed)
+const logout = async (request, h) =>
+// Implement logout logic here (if applicable)
+// ...
+
+  // eslint-disable-next-line implicit-arrow-linebreak
+  ({ message: 'Logout successful' });
+
 module.exports = {
   searchCustomers,
   getAllCustomers,
@@ -370,10 +497,12 @@ module.exports = {
   updateSME,
   deleteSME,
   getSMEsocialmediaById,
-  createSMEsocialmedia,
+  // createSMEsocialmedia,
   updateSMEsocialmedia,
   getAllFeedbacks,
   getFeedbackById,
+  getFeedbacksByCustomerId,
+  getFeedbacksBySMEId,
   createFeedback,
   updateFeedback,
   deleteFeedback,
@@ -384,4 +513,6 @@ module.exports = {
   createVoucher,
   updateVoucher,
   deleteVoucher,
+  login,
+  logout,
 };
