@@ -1,5 +1,18 @@
 # **API Documentation**
 
+## Table of Contents
+
+- [Base URL](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#base-url)
+- [Customer Users](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#customer-users)
+- [SME Users](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#sme-users)
+- [SME Social Media](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#sme-social-media)
+- [Feedbacks](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#feedbacks)
+- [Categories](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#categories)
+- [Vouchers](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#vouchers)
+- [Important Notes](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#important-notes)
+- [Important Notes for Search usage](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#important-notes-for-search-usage)
+- [Example Usage](https://github.com/ahmadmcer/ch2-ps518-backend?tab=readme-ov-file#example-usage)
+
 ## **Base URL**
 
 - **Base URL:** `https://ch2-ps518.et.r.appspot.com`
@@ -158,26 +171,6 @@
   - `200 OK`: Returns the social media details of the specified SME.
   - `404 Not Found`: If the SME user with the given ID is not found.
 
-### Create SME Social Media
-- **Endpoint:** `/api/smes/{sme_id}/socialmedia`
-- **Method:** `POST`
-- **Description:** Create social media details for a specific SME.
-- **Parameters:**
-  - `sme_id` (path): ID of the SME user.
-- **Request Body:**
-  - `facebook`: SME's Facebook URL.
-  - `instagram`: SME's Instagram URL.
-  - `x`: SME's X URL.
-  - `tiktok`: SME's TikTok URL.
-  - `whatsapp`: SME's WhatsApp number.
-  - `telegram`: SME's Telegram username.
-  - `youtube`: SME's YouTube URL.
-  - `linkedin`: SME's LinkedIn URL.
-  - `website`: SME's website URL.
-- **Response:**
-  - `201 Created`: Returns a success message indicating the social media details were created.
-  - `404 Not Found`: If the SME user with the given ID is not found.
-
 ### Update SME Social Media
 - **Endpoint:** `/api/smes/{sme_id}/socialmedia`
 - **Method:** `PUT`
@@ -216,6 +209,26 @@
 - **Response:**
   - `200 OK`: Returns the details of the specified feedback.
   - `404 Not Found`: If the feedback with the given ID is not found.
+
+### **Get Feedbacks by Customer ID**
+- **Endpoint:** `/api/feedbacks/customers/{customer_id}`
+- **Method:** `GET`
+- **Description:** Get feedbacks associated with a specific customer.
+- **Parameters:**
+  - `customer_id` (path): ID of the customer.
+- **Response:**
+  - `200 OK`: Returns an array of feedbacks associated with the specified customer.
+  - `404 Not Found`: If the customer with the given ID is not found.
+
+### **Get Feedbacks by SME ID**
+- **Endpoint:** `/api/feedbacks/smes/{sme_id}`
+- **Method:** `GET`
+- **Description:** Get feedbacks associated with a specific SME.
+- **Parameters:**
+  - `sme_id` (path): ID of the SME.
+- **Response:**
+  - `200 OK`: Returns an array of feedbacks associated with the specified SME.
+  - `404 Not Found`: If the SME with the given ID is not found.
 
 ### Create Feedback
 - **Endpoint:** `/api/feedbacks`
@@ -332,6 +345,29 @@
 - **Response:**
   - `200 OK`: Returns a success message indicating the voucher was deleted.
   - `404 Not Found`: If the voucher with the given ID is not found.
+
+### **Login**
+
+- **Endpoint:** `/api/login`
+- **Method:** `POST`
+- **Description:** Perform login for a customer or SME.
+- **Request Body:**
+  - `email` (string, optional): Email address of the user.
+  - `username` (string, optional): Username of the user.
+  - `password` (string, required): Password of the user.
+  - `userType` (string, required): Type of user (`customer` or `sme`).
+- **Response:**
+  - `200 OK`: Returns a `loginResult` object containing `userId` and `nama`.
+  - `401 Unauthorized`: If the provided credentials are invalid.
+  - `400 Bad Request`: If the user type is invalid.
+
+### **Logout (if needed)**
+
+- **Endpoint:** `/api/logout`
+- **Method:** `POST`
+- **Description:** Perform logout for a user (if needed).
+- **Response:**
+  - `200 OK`: Returns a success message indicating logout was successful.
 
 ## **Important Notes:**
 - All endpoints are prefixed with `/api`.
@@ -478,5 +514,99 @@
     "youtube": "https://youtube.com/smeshop",
     "linkedin": "https://linkedin.com/company/smeshop",
     "website": "https://smeshop.com"
+  }
+  ```
+
+### 6. Get Feedbacks by Customer ID
+- **Request:**
+  ```http
+  GET /api/customers/1/feedbacks
+  ```
+- **Response (200 OK):**
+  ```json
+  [
+    {
+      "id": 1,
+      "customer_id": 1,
+      "sme_id": 1,
+      "rating": 5,
+      "comment": "Excellent service!",
+      "category_id": 1,
+      "created_at": "2023-02-15T08:30:00Z"
+    },
+    // Additional feedback objects...
+  ]
+  ```
+
+### 7. Get Feedbacks by SME ID
+- **Request:**
+  ```http
+  GET /api/smes/1/feedbacks
+  ```
+- **Response (200 OK):**
+  ```json
+  [
+    {
+      "id": 1,
+      "customer_id": 1,
+      "sme_id": 1,
+      "rating": 4,
+      "comment": "Great products!",
+      "category_id": 2,
+      "created_at": "2023-02-10T12:45:00Z"
+    },
+    // Additional feedback objects...
+  ]
+  ```
+
+### 8. Login as Customer
+- **Request:**
+  ```http
+  POST /api/login
+  Content-Type: application/json
+
+  {
+    "email": "john.doe@example.com",
+    "password": "securepass",
+    "userType": "customer"
+  }
+  ```
+- **Response (200 OK):**
+  ```json
+  {
+    "userId": 1,
+    "nama": "John Doe"
+  }
+  ```
+
+### 9. Login as SME
+- **Request:**
+  ```http
+  POST /api/login
+  Content-Type: application/json
+
+  {
+    "username": "smeshop",
+    "password": "secretpassword",
+    "userType": "sme"
+  }
+  ```
+- **Response (200 OK):**
+  ```json
+  {
+    "userId": 1,
+    "nama": "SME Shop"
+  }
+  ```
+
+### 10. Logout
+- **Request:**
+  ```http
+  POST /api/logout
+  ```
+- **Response (200 OK):**
+  ```json
+  {
+    "message": "Logout successful"
   }
   ```
