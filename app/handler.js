@@ -134,19 +134,12 @@ const createSME = async (request, h) => {
     username, password, name, email, phone, profile_picture, banner_picture, description,
   } = request.payload;
 
-  // eslint-disable-next-line no-shadow
-  const { db } = request.server.app; // Mengambil instance db dari server.app
-
   try {
-    // Start a transaction
-    await db.beginTransaction();
-
     // Create SME
     const [smeResult] = await db.query(
       'INSERT INTO sme_users (username, password, name, email, phone, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())',
       [username, password, name, email, phone, profile_picture, banner_picture, description],
     );
-
     const smeId = smeResult.insertId;
 
     // Create SME Social Media with the same ID
@@ -155,17 +148,11 @@ const createSME = async (request, h) => {
       [smeId, '', '', '', '', '', '', '', '', ''],
     );
 
-    // Commit the transaction
-    await db.commit();
-
     return {
       id: smeId,
       message: 'SME and SME Social Media created successfully!',
     };
   } catch (error) {
-    // Rollback the transaction in case of an error
-    await db.rollback();
-
     console.error('Error creating SME with Social Media:', error.message);
     throw error;
   }
