@@ -37,12 +37,12 @@ const getCustomerById = async (request, h) => {
 const createCustomer = async (request, h) => {
   try {
     const {
-      name, username, password, email, phone, profile_picture,
+      name, username, password, email, whatsapp, profile_picture,
     } = request.payload;
     const created_at = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
     const [result] = await db.query(
-      'INSERT INTO customer_users (name, username, password, email, phone, profile_picture, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, username, password, email, phone, profile_picture, created_at],
+      'INSERT INTO customer_users (name, username, password, email, whatsapp, profile_picture, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [name, username, password, email, whatsapp, profile_picture, created_at],
     );
     return { id: result.insertId, message: 'Customer created successfully!' };
   } catch (error) {
@@ -55,11 +55,11 @@ const updateCustomer = async (request, h) => {
   try {
     const { id } = request.params;
     const {
-      name, username, password, email, phone, profile_picture,
+      name, username, password, email, whatsapp, profile_picture,
     } = request.payload;
     await db.query(
-      'UPDATE customer_users SET name = ?, username = ?, password = ?, email = ?, phone = ?, profile_picture = ? WHERE id = ?',
-      [name, username, password, email, phone, profile_picture, id],
+      'UPDATE customer_users SET name = ?, username = ?, password = ?, email = ?, whatsapp = ?, profile_picture = ? WHERE id = ?',
+      [name, username, password, email, whatsapp, profile_picture, id],
     );
     return { message: 'Customer updated successfully!' };
   } catch (error) {
@@ -115,12 +115,12 @@ const getSMEById = async (request, h) => {
 // const createSME = async (request, h) => {
 //   try {
 //     const {
-//       username, password, name, email, phone, profile_picture, banner_picture, description,
+//       username, password, name, email, whatsapp, profile_picture, banner_picture, description,
 //     } = request.payload;
 //     const created_at = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 //     const [result] = await db.query(
-//       'INSERT INTO sme_users (username, password, name, email, phone, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-//       [username, password, name, email, phone, profile_picture, banner_picture, description, created_at],
+//       'INSERT INTO sme_users (username, password, name, email, whatsapp, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+//       [username, password, name, email, whatsapp, profile_picture, banner_picture, description, created_at],
 //     );
 //     return { id: result.insertId, message: 'SME created successfully!' };
 //   } catch (error) {
@@ -131,14 +131,14 @@ const getSMEById = async (request, h) => {
 
 const createSME = async (request, h) => {
   const {
-    username, password, name, email, phone, profile_picture, banner_picture, description,
+    username, password, name, email, whatsapp, profile_picture, banner_picture, description,
   } = request.payload;
 
   try {
     // Create SME
     const [smeResult] = await db.query(
-      'INSERT INTO sme_users (username, password, name, email, phone, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())',
-      [username, password, name, email, phone, profile_picture, banner_picture, description],
+      'INSERT INTO sme_users (username, password, name, email, whatsapp, profile_picture, banner_picture, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())',
+      [username, password, name, email, whatsapp, profile_picture, banner_picture, description],
     );
     const smeId = smeResult.insertId;
 
@@ -162,11 +162,11 @@ const updateSME = async (request, h) => {
   try {
     const { id } = request.params;
     const {
-      username, password, name, email, phone, profile_picture, banner_picture, description,
+      username, password, name, email, whatsapp, profile_picture, banner_picture, description,
     } = request.payload;
     await db.query(
-      'UPDATE sme_users SET username = ?, password = ?, name = ?, email = ?, phone = ?, profile_picture = ?, banner_picture = ?, description = ? WHERE id = ?',
-      [username, password, name, email, phone, profile_picture, banner_picture, description, id],
+      'UPDATE sme_users SET username = ?, password = ?, name = ?, email = ?, whatsapp = ?, profile_picture = ?, banner_picture = ?, description = ? WHERE id = ?',
+      [username, password, name, email, whatsapp, profile_picture, banner_picture, description, id],
     );
     return { message: 'SME updated successfully!' };
   } catch (error) {
